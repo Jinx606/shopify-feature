@@ -1,0 +1,99 @@
+{{ 'section-new-feature.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "New Feature Section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured Product"
+    },
+    {
+      "type": "text",
+      "id": "product_feature_1",
+      "label": "Product Feature 1"
+    },
+    {
+      "type": "text",
+      "id": "product_feature_2",
+      "label": "Product Feature 2"
+    },
+    {
+      "type": "text",
+      "id": "product_feature_3",
+      "label": "Product Feature 3"
+    },
+    {
+      "type": "text",
+      "id": "product_feature_4",
+      "label": "Product Feature 4"
+    },
+    {
+      "type": "text",
+      "id": "product_feature_5",
+      "label": "Product Feature 5"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_link",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA Button Text"
+    }
+  ],
+  "presets": [{ "name": "New feature section" }]
+}
+{% endschema %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="new-feature-section">
+  {% if section.settings.featured_product %}
+    <div class="product-info">
+      <h2>{{ section.settings.featured_product.title }}</h2>
+      <!-- Move the title above the image -->
+      {% assign featured_product_image = section.settings.featured_product.featured_image %}
+      <img
+        src="{{ featured_product_image.src | image_url: 'medium' }}"
+        alt="{{ section.settings.featured_product.title }}"
+        width="300"
+        height="300"
+        class="center"
+      >
+    </div>
+  {% endif %}
+  <ul>
+    {% if section.settings.product_feature_1 != blank %}
+      <li>{{ section.settings.product_feature_1 }}</li>
+    {% endif %}
+    {% if section.settings.product_feature_2 != blank %}
+      <li>{{ section.settings.product_feature_2 }}</li>
+    {% endif %}
+    {% if section.settings.product_feature_3 != blank %}
+      <li>{{ section.settings.product_feature_3 }}</li>
+    {% endif %}
+    {% if section.settings.product_feature_4 != blank %}
+      <li>{{ section.settings.product_feature_4 }}</li>
+    {% endif %}
+    {% if section.settings.product_feature_5 != blank %}
+      <li>{{ section.settings.product_feature_5 }}</li>
+    {% endif %}
+  </ul>
+  <a href="{{ section.settings.cta_button_link }}" class="cta-button">{{ section.settings.cta_button_text }}</a>
+</div>
